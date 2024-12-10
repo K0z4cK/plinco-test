@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ball
+  - Green
+  - Yellow
+  - Red
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ball
   - Water
   - UI
   - Green

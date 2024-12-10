@@ -16,7 +16,7 @@ public class Ball : MonoBehaviour
 
         _bet = bet;
         _spriteRenderer.color = ColorUtility.GetColor(color);
-        gameObject.layer = LayerMask.NameToLayer(ColorUtility.GetLayerName(color));
+        gameObject.tag = ColorUtility.GetLayerName(color);
         IsInUse = true;
     }
 

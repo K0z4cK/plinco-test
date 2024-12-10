@@ -5,6 +5,8 @@ using Zenject;
 
 public class Slot : MonoBehaviour
 {
+    private const string BallLayerName = "Ball";
+
     public event UnityAction<Ball> onBallEnter;
     public event UnityAction<float> onWinRecieve;
 
@@ -13,6 +15,7 @@ public class Slot : MonoBehaviour
 
     private ColorType _color;
     private float _multiplier;
+    private string _ballTag;
 
     public void Init(ColorType color, float multiplier)
     {
@@ -23,11 +26,12 @@ public class Slot : MonoBehaviour
         _sprite.color = ColorUtility.GetColor(_color);
         _multiplierTMP.text = _multiplier.ToString();
         gameObject.layer = LayerMask.NameToLayer(ColorUtility.GetLayerName(_color));
+        _ballTag = ColorUtility.GetLayerName(_color);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Ball") && other.gameObject.layer == gameObject.layer)
+        if (other.CompareTag(_ballTag) && other.gameObject.layer == LayerMask.NameToLayer(BallLayerName))
         {
             Debug.Log($"Ball of color {_color} entered. Multiplier: {_multiplier}");
 

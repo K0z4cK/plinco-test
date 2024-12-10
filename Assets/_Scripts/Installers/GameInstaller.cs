@@ -6,6 +6,7 @@ public class GameInstaller : MonoInstaller
 {
     [Header("GameManager Properties")]
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private Bets _bets;
 
     [Header("BallManager Properties")]
     [SerializeField] private Ball _ballPrefab;
@@ -15,24 +16,29 @@ public class GameInstaller : MonoInstaller
     [Header("Slots Properties")]
     [SerializeField] private Slot _slotPrefab;
 
-    [SerializeField] private List<float> _greenMultipliers;
-    [SerializeField] private List<float> _yellowMultipliers;
-    [SerializeField] private List<float> _redMultipliers;
+    [SerializeField] private SlotMultipliers _greenMultipliers;
+    [SerializeField] private SlotMultipliers _yellowMultipliers;
+    [SerializeField] private SlotMultipliers _redMultipliers;
 
     [SerializeField] Transform _slotsSpawnPosition;
     [SerializeField] float _slotsSpawnOffsetX;
     [SerializeField] float _slotsSpawnOffsetY;
 
+    [Header("UIManager Properties")]
+    [SerializeField] private UIManager _uiManager;
+
     private List<Slot> _slots = new List<Slot>();
 
     public override void InstallBindings()
-    {      
+    {
+        Container.Bind<Bets>().FromInstance(_bets).AsSingle();
         Container.Bind<BallManager>().AsSingle().WithArguments(_ballPrefab, _ballSpawnPosition, _spawnRadius).NonLazy();
+        Container.Bind<UIManager>().FromInstance(_uiManager).AsSingle();
         Container.Bind<GameManager>().FromInstance(_gameManager).AsSingle();
 
-        SpawnSlots(ColorType.Green, _greenMultipliers, _slotsSpawnOffsetY * 2);
-        SpawnSlots(ColorType.Yellow, _yellowMultipliers, _slotsSpawnOffsetY);
-        SpawnSlots(ColorType.Red, _redMultipliers, 0);
+        SpawnSlots(ColorType.Green, _greenMultipliers.multipliers, _slotsSpawnOffsetY * 2);
+        SpawnSlots(ColorType.Yellow, _yellowMultipliers.multipliers, _slotsSpawnOffsetY);
+        SpawnSlots(ColorType.Red, _redMultipliers.multipliers, 0);
     }
 
     private void SpawnSlots(ColorType color, List<float> multipliers, float slotsSpawnOffsetY)

@@ -19,7 +19,6 @@ public class BallManager
         _spawnPosition = spawnPosition;
         _spawnRadius = spawnRadius;
         _ballsPool = new ObjectPool<Ball>(Create, Get, Release);
-        Debug.Log("BallManager constructed");
     }
 
     public void SpawnBall(float bet, ColorType color)
@@ -31,7 +30,7 @@ public class BallManager
 
     public void OnBallReturned(Ball ball)
     {
-        Debug.Log($"Ball returned: {ball.name}");
+        //Debug.Log($"Ball returned: {ball.name}");
         _ballsPool.Release(ball);
     }
 
@@ -45,7 +44,7 @@ public class BallManager
     private void Get(Ball ball)
     {
         Vector2 spawnPosition = new Vector3(Random.Range(-_spawnRadius, _spawnRadius), Random.Range(-_spawnRadius, _spawnRadius), 0) + _spawnPosition.position;
-        Debug.Log($"SpawnBall: {spawnPosition}");
+        //Debug.Log($"SpawnBall: {spawnPosition}");
         ball.transform.position = spawnPosition;
         ball.gameObject.SetActive(true);
     }
